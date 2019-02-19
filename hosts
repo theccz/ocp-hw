@@ -16,18 +16,11 @@ ansible_become=yes
 ###########################################################################
 
 openshift_deployment_type=openshift-enterprise
-
 openshift_disable_check="disk_availability,memory_availability,docker_image_availability"
-
-# OpenShift Version:
-# If you modify the openshift_image_tag or the openshift_pkg_version variables after the cluster is set up, then an upgrade can be triggered, resulting in downtime.
-# If openshift_image_tag is set, its value is used for all hosts in system container environments, even those that have another version installed. If
-# Use this variable to specify a container image tag to install or configure.
-#openshift_pkg_version is set, its value is used for all hosts in RPM-based environments, even those that have another version installed.
 openshift_image_tag=v3.11.43
 # Use this variable to specify an RPM version to install or configure.
 openshift_pkg_version=-3.11.43
-openshift_release=3.11.43
+openshift_release="3.11.43"
 
 
 # Node Groups
@@ -48,11 +41,11 @@ openshift_enable_olm=true
 
 #oreg_url=registry.access.redhat.com/openshift3/ose-${component}:${version}
 oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
-oreg_auth_user=REPLACE_ME
-oreg_auth_password=REPLACE_ME
+oreg_auth_user=11009103|BCN20190204
+oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI2OWNhYWVjYTYyODQ0YjgwOTEyYThiYTRlYWFiZGRjNyJ9.jVxsCx4nojdxU95oxmPTkxDReIuek-moanRTIFHbNda-I_hg1LwFqbB8S9pSWOq3iOtWqIKDVVaRJUEDt-T2fWNMJMrbP_d1izRjHOZsttFLP7CVCxmhm_1gV-bwW4n-8d73vvE1X3Xper6K2ZWRFMqabylHoci6mQ7iX-vX9Um6juZg1ElNZ5OhPSghsYlrMlPF3ypH7WYiHCpYiuJnniOkB6vm_60L2WuHXnFaOfXLQbkFOvppE7ehJXLgTu92tVPPOS3UTl8uH9v3PJBcDMHHZY871q9_n4OYk2LXbzYwJ5Lzx_Y9VXfQY3jSgvBSBb4u9GXrjty63kfMdhD9vzwXOubrQ97LFTPjGi5Vyjox5se9QxNpo0TD86JQYn83k7hTjovVMpQXUP_mxEVXVlAmATOam4akYLtjShnNjaY1Zui1fRYMDKpCxOYf9eGDpyjmdf_9zw6eaTQZ7hH--CdlZr_d5BymO0CkyHNDMb80fOaCWLJ_2WskDEVWMOUFIAkf7tSZZS6oiqwEQssSZagcwVX2Y5MABMeRQrtA9xg0modCKuK206UYgVUwo5zD7N2BQQjiPhetmJMlYtDLqlF8ybrtdDkRdvWRN27m3Gk8WoANupvjIB334n_4_UZD_cVdX3sm9UZY1h8x9X3F6vBS0oUzhbWHYTSqRrSroSA
 
 # For Operator Framework Images
-openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'REPLACE_ME','password':'REPLACE_ME','test_image':'mongodb/enterprise-operator:0.3.2'}]
+openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'11009103|BCN20190204','password':'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI2OWNhYWVjYTYyODQ0YjgwOTEyYThiYTRlYWFiZGRjNyJ9.jVxsCx4nojdxU95oxmPTkxDReIuek-moanRTIFHbNda-I_hg1LwFqbB8S9pSWOq3iOtWqIKDVVaRJUEDt-T2fWNMJMrbP_d1izRjHOZsttFLP7CVCxmhm_1gV-bwW4n-8d73vvE1X3Xper6K2ZWRFMqabylHoci6mQ7iX-vX9Um6juZg1ElNZ5OhPSghsYlrMlPF3ypH7WYiHCpYiuJnniOkB6vm_60L2WuHXnFaOfXLQbkFOvppE7ehJXLgTu92tVPPOS3UTl8uH9v3PJBcDMHHZY871q9_n4OYk2LXbzYwJ5Lzx_Y9VXfQY3jSgvBSBb4u9GXrjty63kfMdhD9vzwXOubrQ97LFTPjGi5Vyjox5se9QxNpo0TD86JQYn83k7hTjovVMpQXUP_mxEVXVlAmATOam4akYLtjShnNjaY1Zui1fRYMDKpCxOYf9eGDpyjmdf_9zw6eaTQZ7hH--CdlZr_d5BymO0CkyHNDMb80fOaCWLJ_2WskDEVWMOUFIAkf7tSZZS6oiqwEQssSZagcwVX2Y5MABMeRQrtA9xg0modCKuK206UYgVUwo5zD7N2BQQjiPhetmJMlYtDLqlF8ybrtdDkRdvWRN27m3Gk8WoANupvjIB334n_4_UZD_cVdX3sm9UZY1h8x9X3F6vBS0oUzhbWHYTSqRrSroSA','test_image':'mongodb/enterprise-operator:0.3.2'}]
 
 openshift_examples_modify_imagestreams=true
 
@@ -68,9 +61,9 @@ openshift_master_api_port=443
 openshift_master_console_port=443
 
 #Default:  openshift_master_cluster_method=native
-openshift_master_cluster_hostname=loadbalancer.3cea.internal
-openshift_master_cluster_public_hostname=loadbalancer.3cea.example.opentlc.com
-openshift_master_default_subdomain=apps.3cea.example.opentlc.com
+openshift_master_cluster_hostname=loadbalancer.GUID.internal
+openshift_master_cluster_public_hostname=loadbalancer.GUID.example.opentlc.com
+openshift_master_default_subdomain=apps.GUID.example.opentlc.com
 #openshift_master_ca_certificate={'certfile': '/root/intermediate_ca.crt', 'keyfile': '/root/intermediate_ca.key'}
 openshift_master_overwrite_named_certificates=True
 
@@ -110,7 +103,7 @@ openshift_master_identity_providers=[{'name': 'ldap', 'challenge': 'true', 'logi
 # LDAP and HTPASSWD dependencies
 
 openshift_master_htpasswd_file=/root/htpasswd.openshift
-openshift_master_ldap_ca_file=/root/ipa-ca.crt
+#openshift_master_ldap_ca_file=/root/ipa-ca.crt
 
 
 ###########################################################################
@@ -169,7 +162,7 @@ openshift_prometheus_alertbuffer_cpu_limit=200m
 # Grafana
 openshift_grafana_node_selector={"node-role.kubernetes.io/infra":"true"}
 openshift_grafana_storage_type=pvc
-openshift_grafana_pvc_size=2Gi
+openshift_grafana_pvc_size=5Gi
 openshift_grafana_node_exporter=true
 
 ########################
@@ -250,34 +243,33 @@ nodes
 nfs
 
 [lb]
-loadbalancer.3cea.internal
+loadbalancer.GUID.internal
 
 [masters]
-master1.3cea.internal
-master2.3cea.internal
-master3.3cea.internal
+master1.GUID.internal
+master2.GUID.internal
+master3.GUID.internal
 
 [etcd]
-master1.3cea.internal
-master2.3cea.internal
-master3.3cea.internal
+master1.GUID.internal
+master2.GUID.internal
+master3.GUID.internal
 
 [nodes]
 ## These are the masters
-master1.3cea.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
-master2.3cea.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
-master3.3cea.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
+master1.GUID.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
+master2.GUID.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
+master3.GUID.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
 
 ## These are infranodes
-infranode1.3cea.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
-infranode2.3cea.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
+infranode1.GUID.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
+infranode2.GUID.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
 
 ## These are regular nodes
-node1.3cea.internal openshift_node_group_name='node-config-compute' openshift_node_problem_detector_install=true
-node2.3cea.internal openshift_node_group_name='node-config-compute' openshift_node_problem_detector_install=true
-node3.3cea.internal openshift_node_group_name='node-config-compute' openshift_node_problem_detector_install=true
+node1.GUID.internal openshift_node_group_name='node-config-compute' openshift_node_problem_detector_install=true
+node2.GUID.internal openshift_node_group_name='node-config-compute' openshift_node_problem_detector_install=true
+node3.GUID.internal openshift_node_group_name='node-config-compute' openshift_node_problem_detector_install=true
 
 
 [nfs]
-support1.3cea.internal
-
+support1.GUID.internal
