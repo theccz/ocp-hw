@@ -30,7 +30,7 @@
   hosts: localhost
   tasks:
     - name: Generate Inventory script
-      script: /root/ocp_advanced_deployment_homework/scripts/generate_inventory.sh
+      script: /root/ocp-hw/scripts/inventory.sh
       
 - name: Add users to htpasswd
   hosts: localhost
@@ -69,7 +69,7 @@
   hosts: nfs
   tasks:
     - name: Execute create_pvs script
-      script: /root/ocp_advanced_deployment_homework/scripts/create_pvs.sh 
+      script: /root/ocp-hw/scripts/create_pvs.sh 
     - name: Restarting NFS Server...
       shell: systemctl restart nfs-server
 
@@ -77,13 +77,13 @@
   hosts: localhost
   tasks:
     - name: pvs 5G script
-      script: /root/ocp_advanced_deployment_homework/scripts/pvs_5Gsize.sh
+      script: /root/ocp-hw/scripts/pvs_5Gi.sh
 
 - name: Create 25 definitions files for PVs 10G size
   hosts: localhost
   tasks:
     - name: pvs 10G script
-      script: /root/ocp_advanced_deployment_homework/scripts/pvs_10Gsize.sh
+      script: /root/ocp-hw/scripts/pvs_10Gi.sh
 
 - name: Create all PVs from definitions files
   hosts: localhost
@@ -105,19 +105,19 @@
   hosts: localhost
   tasks:
     - name: create mongo project
-      script: /root/ocp_advanced_deployment_homework/scripts/nodejs_mongo_app.sh
+      script: /root/ocp-hw/scripts/nodejs_mongo_app.sh
 
 - name: Jenkins Setup Pipeline and build tasks and then HPA on tasks-prod
   hosts: localhost
   tasks:
     - name: jenkins setup
-      script: /root/ocp_advanced_deployment_homework/scripts/jenkins_build.sh
+      script: /root/ocp-hw/scripts/jenkins_build.sh
 
 - name: Set node labels
   hosts: localhost
   tasks:
     - name: Call set labels script
-      script: /root/ocp_advanced_deployment_homework/scripts/set_labels.sh
+      script: /root/ocp-hw/scripts/labels.sh
 
 
 
