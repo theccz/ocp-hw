@@ -1,0 +1,126 @@
+---
+- name: Prepare GUID environment variable across all hosts
+  hosts: all
+  tasks:
+    - name: All GUID env variable
+      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
+
+- name: Verify Installation and Configuration of Docker
+  hosts: nodes
+  tasks:
+    - name: docker restart
+      shell: systemctl restart docker
+
+- name: Verify NFS Shared Volumes on Hosts
+  hosts: nfs
+  tasks: 
+    - name: export fs
+      shell: exportfs
+
+- name: Install packages and config auth
+  hosts: localhost
+  tasks:
+    - name: required packages are present
+      yum:
+        name:
+          - atomic-openshift-clients
+        state: present
+
+- name: Generate Inventory Hosts File
+  hosts: localhost
+  tasks:
+    - name: Generate Inventory script
+      script: /root/ocp_advanced_deployment_homework/scripts/generate_inventory.sh
+      
+- name: Add users to htpasswd
+  hosts: localhost
+  tasks:
+    - name: Add amy
+      shell: htpasswd -b /root/htpasswd.openshift amy amy
+    - name: Add Andrew
+      shell: htpasswd -b /root/htpasswd.openshift andrew andrew 
+    - name: Add betty
+      shell: htpasswd -b /root/htpasswd.openshift betty betty
+    - name: Add brian
+      shell: htpasswd -b /root/htpasswd.openshift brian brian      
+
+- name: Execute the openshift-ansible prerequisites
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+
+- name: Execute the openshift-ansible Deployer
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+
+- name: Verify OpenShift Cluster
+  hosts: masters[0]
+  tasks:
+    - name: copy the kube comnfig file
+      fetch: 
+        src: /root/.kube/config 
+        dest: /root/.kube/config 
+        flat: yes
+
+- name: Post installation configuration
+  hosts: localhost
+  tasks:
+    - name: make sure you are system:dmin
+      shell: oc whoami | grep system:admin
+
+- name: Create PVs for Users
+  hosts: nfs
+  tasks:
+    - name: Execute create_pvs script
+      script: /root/ocp_advanced_deployment_homework/scripts/create_pvs.sh 
+    - name: Restarting NFS Server...
+      shell: systemctl restart nfs-server
+
+- name: Create 25 definitions files for PVs 5G size
+  hosts: localhost
+  tasks:
+    - name: pvs 5G script
+      script: /root/ocp_advanced_deployment_homework/scripts/pvs_5Gsize.sh
+
+- name: Create 25 definitions files for PVs 10G size
+  hosts: localhost
+  tasks:
+    - name: pvs 10G script
+      script: /root/ocp_advanced_deployment_homework/scripts/pvs_10Gsize.sh
+
+- name: Create all PVs from definitions files
+  hosts: localhost
+  tasks:
+    - name: execute the pv files
+      shell: cat /root/pvs/* | oc create -f -
+    - name: get those pvs
+      shell: oc get pv 
+      
+- name: Fix NFS Persistent Volume Recycling
+  hosts: nodes
+  tasks: 
+    - name: docker pull recycler
+      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+    - name: docker pull 3.9.14 recycler
+      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.9.14
+
+- name: Smoke Test
+  hosts: localhost
+  tasks:
+    - name: create mongo project
+      script: /root/ocp_advanced_deployment_homework/scripts/nodejs_mongo_app.sh
+
+- name: Jenkins Setup Pipeline and build tasks and then HPA on tasks-prod
+  hosts: localhost
+  tasks:
+    - name: jenkins setup
+      script: /root/ocp_advanced_deployment_homework/scripts/jenkins_build.sh
+
+- name: Set node labels
+  hosts: localhost
+  tasks:
+    - name: Call set labels script
+      script: /root/ocp_advanced_deployment_homework/scripts/set_labels.sh
+
+
+
+
+
+  
