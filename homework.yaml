@@ -5,6 +5,12 @@
     - name: All GUID env variable
       shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
 
+- name:  Configure Authentication Against IPA (LDAP) Server
+  hosts: localhost
+  tasks:
+    - name: Distribute Identity Management (IdM) Certificate Authority Certificates
+    - shell: wget http://ipa.shared.example.opentlc.com/ipa/config/ca.crt -O /root/ipa-ca.crt 
+
 - name: Verify Installation and Configuration of Docker
   hosts: nodes
   tasks:
