@@ -9,7 +9,9 @@
   hosts: localhost
   tasks:
     - name: Distribute Identity Management (IdM) Certificate Authority Certificates
-      shell: wget http://ipa.shared.example.opentlc.com/ipa/config/ca.crt -O /root/ipa-ca.crt 
+      get_url: 
+        url: http://ipa.shared.example.opentlc.com/ipa/config/ca.crt
+        dest: /root/ipa-ca.crt
 
 - name: Verify Installation and Configuration of Docker
   hosts: nodes
