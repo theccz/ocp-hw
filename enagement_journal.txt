@@ -1,0 +1,110 @@
+OpenShift Container Platform - Advanced Deployment - Homework - Enagement Journal
+
+Goal
+
+With this repo, you deploy and configure OpenShift Container Platform on a group of servers to meet these requirements:
+
+- Configure Red Hat Enterprise Linux (RHEL) hosts for OpenShift deployment
+- Deploy a highly available OpenShift Container Platform cluster
+- Configure the OpenShift Container Platform cluster
+- Deploy smoke-test application
+- Create Jenkins CI/CD pipeline
+- Establish multitenancy on your cluster with labels 
+
+Summary
+
+Ansible playbook file homework.yaml is entry point for the installation configuration, which includes all operational tasks below.
+     
+     1. Prepare GUID environment variable across all hosts
+     2. Configure Authentication Against IPA (LDAP) Server
+     3. Verify Installation and Configuration of Docker
+     4. Verify NFS Shared Volumes on Hosts
+     5. Install packages and config auth
+     6. Generate Inventory Hosts File
+     7. Execute the openshift-ansible prerequisites
+     8. Execute the openshift-ansible Deployer
+     9. Verify OpenShift Cluster
+    10. Post installation configuration
+    11. Create PVs for Users
+    12. Create 25 definitions files for PVs 5G size
+    13. Create 25 definitions files for PVs 10G size
+    14. Create all PVs from definitions files
+    15. Fix NFS Persistent Volume Recycling
+    16. Smoke Test
+    17. Setup Jenkins CI/CD workflow & HPA configuration on production deployment of openshift-tasks
+    18. Multitenancy labels
+
+Provisioned Environment Hosts
+
+This one-click installation script applies to the following host environment.
+    • Bastion host: bastion.$GUID.example.opentlc.com, bastion.$GUID.internal
+    • Load balancer: loadbalancer.$GUID.example.opentlc.com, loadbalancer.$GUID.internal
+    • 3 OpenShift master nodes: master{1,2,3}.$GUID.internal
+    • 2 OpenShift infrastructure nodes: infranode{1,2}.$GUID.example.opentlc.com, infranode{1,2}.$GUID.internal
+    • 4 OpenShift worker nodes: node{1-3}.$GUID.internal
+    • NFS server: support1.$GUID.internal
+
+Basic Requirements
+
+- User user1 can log in as administrator on the master console. The password is r3dh4t1!
+- Registry console URL is https://registry-console-default.apps.$GUID.example.opentlc.com.
+- 25 PVs with a size of 5 GB and ReadWriteOnce  access mode have been created.
+- 25 PVs with a size of 10 GB and ReadWriteMany access mode have been created.
+- Create and destroy the nodejs-mongo-persistent application by using smoking test scripts.
+
+These are related shell scripts below:
+./scripts/create_pvs.sh
+./scripts/pvs_5Gi.sh
+./scripts/pvs_10Gi.sh
+./scripts/nodejs_mongo_app.sh
+
+HA Requirements
+
+There are three masters working
+There are three etcd instances working
+There is a load balancer to access the masters called loadbalancer1.$GUID.example.opentlc.com
+There is a load balancer/DNS for both infranodes called *.apps.$GUID.example.opentlc.com
+There are at two infranodes, labeled env=infra
+
+These are related shell scripts below:
+./scripts/generate_inventory.sh
+
+Environment Configuration
+
+NetworkPolicy is configured and working with projects isolated by default
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+Aggregated logging is configured and working
+Metrics collection is configured and working
+Router and Registry Pods run on Infranodes
+Metrics and Logging components run on Infranodes
+Service Catalog, Template Service Broker, and Ansible Service Broker are all working very well.
+
+This is hosts file:
+./hosts
+
+CICD Workflow
+
+Jenkins pod is running with a persistent volume
+Jenkins deploys openshift-tasks app
+Jenkins OpenShift plugin is used to create a CICD workflow
+HPA is configured and working on production deployment of openshift-tasks
+
+These are related shell scripts and resources below:
+./scripts/jenkins_build
+./scripts/jenkins_clean
+./jenkins-template
+
+Multitenancy
+
+Alpha Corp group have two users, Amy and Andrew
+Beta Corp group have two users, Brian and Betty
+Dedicated node for each Client
+admissionControl plugin sets specific limits per label (client/customer)
+The new project template is modified so that it includes a LimitRange
+The new user template is used to create a user object with the specific label value
+
+These are related shell scripts and templates below:
+./scripts/labels
+./homework.yaml
+
+
