@@ -67,7 +67,7 @@ There is a load balancer/DNS for both infranodes called *.apps.$GUID.example.ope
 There are at two infranodes, labeled env=infra
 
 These are related shell scripts below:
-./scripts/generate_inventory.sh
+./scripts/inventory.sh
 
 Environment Configuration
 
