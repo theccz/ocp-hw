@@ -41,7 +41,7 @@ This one-click installation script applies to the following host environment.
     • Load balancer: loadbalancer.$GUID.example.opentlc.com, loadbalancer.$GUID.internal
     • 3 OpenShift master nodes: master{1,2,3}.$GUID.internal
     • 2 OpenShift infrastructure nodes: infranode{1,2}.$GUID.example.opentlc.com, infranode{1,2}.$GUID.internal
-    • 4 OpenShift worker nodes: node{1-3}.$GUID.internal
+    • 3 OpenShift worker nodes: node{1-3}.$GUID.internal
     • NFS server: support1.$GUID.internal
 
 Basic Requirements
