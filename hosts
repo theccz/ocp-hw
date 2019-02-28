@@ -19,8 +19,8 @@ openshift_deployment_type=openshift-enterprise
 openshift_disable_check="disk_availability,memory_availability,docker_image_availability"
 openshift_image_tag=v3.11.43
 # Use this variable to specify an RPM version to install or configure.
-openshift_pkg_version=-3.11.43
-openshift_release="3.11.43"
+#openshift_pkg_version=-3.11.43
+#openshift_release="3.11.43"
 
 
 # Node Groups
